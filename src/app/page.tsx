@@ -2,20 +2,16 @@ import { Button } from '@/components/ui/button'
 import NoteContainer from '../components/note/note-container'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import NoteBlock from '../components/note/note-block'
-import { Suspense } from 'react'
-import Loading from './loading'
 
-export default async function Home() {
+export default function Home() {
   return (
     <main className='bg-white w-full h-screen flex justify-center items-center'>
       <NoteContainer>
         <section
           style={{ borderColor: 'var(--primary)' }}
-          className='w-full h-5/6 border-2 rounded-tl-xl rounded-tr-xl'>
-          <ScrollArea className='h-full w-full p-3'>
-            <Suspense fallback={<Loading />}>
-              <NoteBlock />
-            </Suspense>
+          className='w-full h-5/6 border-2 rounded-tl-xl rounded-tr-xl p-1'>
+          <ScrollArea className='h-full w-full p-3 '>
+            <NoteBlock />
           </ScrollArea>
         </section>
         <section
