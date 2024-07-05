@@ -2,6 +2,7 @@ import { Button } from '@/components/ui/button'
 import NoteContainer from '../components/note/note-container'
 import { ScrollArea } from '@/components/ui/scroll-area'
 import NoteBlock from '../components/note/note-block'
+import NoteAddDialog from '@/components/note/note-add-dialog'
 
 export default function Home() {
   return (
@@ -17,9 +18,7 @@ export default function Home() {
         <section
           style={{ borderColor: 'var(--primary)' }}
           className='w-full h-1/6 border-2 rounded-bl-xl rounded-br-xl flex items-center justify-center'>
-          <Button variant={'default'} className='w-5/6 h-2/3'>
-            Adicionar nota
-          </Button>
+          <NoteAddDialog />
         </section>
       </NoteContainer>
     </main>

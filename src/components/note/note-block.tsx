@@ -3,9 +3,10 @@ import { useEffect, useState } from 'react'
 import NoteItems from './note-items'
 import NoteBlockLoading from './note-block-loading'
 import { Separator } from '../ui/separator'
+import { url } from '@/lib/Consts'
 
 async function getAllNotes() {
-  const res = await fetch('http://localhost:3000/notes')
+  const res = await fetch(`${url}/notes`)
   const data = await res.json()
   return data
 }
@@ -32,9 +33,7 @@ export default function NoteBlock() {
     <>
       {loading ? (
         <>
-          <div>
-            <NoteBlockLoading />
-          </div>
+          <NoteBlockLoading />
         </>
       ) : (
         <>
