@@ -1,5 +1,5 @@
 import axios from 'axios'
-import jwt_decode from 'jwt-decode'
+import { jwtDecode } from 'jwt-decode'
 import { baseUrl } from './consts'
 
 interface LoginResponse {
@@ -13,7 +13,7 @@ export const login = async (email: string, password: string): Promise<string> =>
 }
 
 export const getNotes = async (token: string) => {
-  const decodedToken = jwt_decode(token) as { sub: string } // Decodifica o token JWT
+  const decodedToken = jwtDecode(token) as { sub: string } // Decodifica o token JWT
   const userId = decodedToken.sub
 
   const response = await axios.get(`${baseUrl}/user/${userId}/notes`, {
