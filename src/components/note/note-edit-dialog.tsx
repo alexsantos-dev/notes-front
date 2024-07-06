@@ -1,8 +1,9 @@
 'use client'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import {
   Dialog,
+  DialogClose,
   DialogContent,
   DialogDescription,
   DialogFooter,
@@ -15,7 +16,7 @@ import { Textarea } from '../ui/textarea'
 import { url } from '@/lib/Consts'
 
 async function editNote(note: string, noteId: string) {
-  await fetch(`${url}notes/${noteId}`, {
+  await fetch(`${url}/notes/${noteId}`, {
     method: 'PATCH',
     headers: {
       'Content-Type': 'application/json',
@@ -24,37 +25,37 @@ async function editNote(note: string, noteId: string) {
   })
 }
 
-export default function NoteEditDialog() {
-  const [noteText, setNoteText] = useState('')
-  const [loading, setLoading] = useState(false)
+export default function NoteEditDialog({ data, onEditComplete }) {
+  const [noteText, setNoteText] = useState(data.note || '')
+
+  useEffect(() => {
+    setNoteText(data.note || '')
+  }, [data])
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setLoading(true)
     try {
-      await editNote(noteText)
+      await editNote(noteText, data.id)
+      onEditComplete()
     } catch (error) {
-      console.error('Error adding note:', error)
-    } finally {
-      setLoading(false)
+      console.error('Error editing note:', error)
     }
   }
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className='w-2/3 h-3/5'>Adicionar nota</Button>
+        <Button variant='ghost' className='w-8 h-8'>
+          ✏️
+        </Button>
       </DialogTrigger>
       <DialogContent className='sm:max-w-[425px]'>
         <form onSubmit={handleSubmit}>
           <DialogHeader className='mb-6'>
-            <DialogTitle>Adicionar nota</DialogTitle>
-            <DialogDescription>
-              Escreva suas notas e clique em salvar quando terminar.
-            </DialogDescription>
+            <DialogTitle>Editar nota</DialogTitle>
           </DialogHeader>
-          <div className='flex gap-3 flex-col'>
-            <Label htmlFor='name'>Name</Label>
+          <div className='flex gap-3 flex-col mb-4'>
+            <Label htmlFor='note'>Nota</Label>
             <Textarea
               className='w-full h-[78px]'
               value={noteText}
@@ -62,9 +63,9 @@ export default function NoteEditDialog() {
             />
           </div>
           <DialogFooter>
-            <Button type='submit' disabled={loading}>
-              {loading ? 'Saving...' : 'Save changes'}
-            </Button>
+            <DialogClose asChild>
+              <Button type='submit'>Salvar</Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>

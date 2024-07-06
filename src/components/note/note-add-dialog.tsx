@@ -4,13 +4,12 @@ import { Button } from '@/components/ui/button'
 import {
   Dialog,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
+  DialogClose,
 } from '@/components/ui/dialog'
-import { Label } from '@/components/ui/label'
 import { Textarea } from '../ui/textarea'
 import { url } from '@/lib/Consts'
 
@@ -24,19 +23,16 @@ async function addNote(note: string) {
   })
 }
 
-export default function NoteAddDialog() {
+export default function NoteAddDialog({ onAddComplete }) {
   const [noteText, setNoteText] = useState('')
-  const [loading, setLoading] = useState(false)
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    setLoading(true)
     try {
       await addNote(noteText)
+      onAddComplete()
     } catch (error) {
       console.error('Error adding note:', error)
-    } finally {
-      setLoading(false)
     }
   }
 
@@ -48,13 +44,9 @@ export default function NoteAddDialog() {
       <DialogContent className='sm:max-w-[425px]'>
         <form onSubmit={handleSubmit}>
           <DialogHeader className='mb-6'>
-            <DialogTitle>Adicionar nota</DialogTitle>
-            <DialogDescription>
-              Escreva suas notas e clique em salvar quando terminar.
-            </DialogDescription>
+            <DialogTitle className='text-center'>Adicionar nota</DialogTitle>
           </DialogHeader>
-          <div className='flex gap-3 flex-col'>
-            <Label htmlFor='name'>Name</Label>
+          <div className='flex gap-3 flex-col mb-4'>
             <Textarea
               className='w-full h-[78px]'
               value={noteText}
@@ -62,9 +54,11 @@ export default function NoteAddDialog() {
             />
           </div>
           <DialogFooter>
-            <Button type='submit' disabled={loading}>
-              {loading ? 'Saving...' : 'Save changes'}
-            </Button>
+            <DialogClose asChild>
+              <Button type='submit'>
+                Salvar
+              </Button>
+            </DialogClose>
           </DialogFooter>
         </form>
       </DialogContent>
