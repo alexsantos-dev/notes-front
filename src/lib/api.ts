@@ -3,23 +3,76 @@ import { jwtDecode } from 'jwt-decode'
 import { baseUrl } from './consts'
 
 interface LoginResponse {
-  access_token: string
+  token: string
+}
+interface AuthResponse {
+  token: string
+  userId: string
 }
 
-export const login = async (email: string, password: string): Promise<string> => {
-  const response = await axios.post<LoginResponse>(`${baseUrl}/auth/login`, { email, password })
-  const { access_token } = response.data
-  return access_token
+interface Data {
+  note: string
 }
 
-export const getNotes = async (token: string) => {
-  const decodedToken = jwtDecode(token) as { sub: string } // Decodifica o token JWT
-  const userId = decodedToken.sub
+export async function login(email: string, password: string) {
+  try {
+    const response = await axios.post<LoginResponse>(`${baseUrl}/auth/login`, { email, password })
+    const { token } = response.data
+    const decodedToken = jwtDecode<{ sub: string }>(token)
+    const userId = decodedToken.sub
+    return { token, userId }
+  } catch (error) {
+    console.log(error)
+  }
+}
 
-  const response = await axios.get(`${baseUrl}/user/${userId}/notes`, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  })
-  return response.data
+export async function GetAllNotes(userId: string, token: string) {
+  try {
+    const response = await axios.get(`${baseUrl}/user/${userId}/notes`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function AddNote(userId: string, data: Data, token: string) {
+  try {
+    const response = await axios.post(`${baseUrl}/user/${userId}/notes`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function UpdateNote(userId: string, noteId: string, token: string, data: Data) {
+  try {
+    const response = await axios.patch(`${baseUrl}/user/${userId}/notes/${noteId}`, data, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+    return response.data
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+export async function DeleteNote(userId: string, noteId: string, token: string) {
+  try {
+    await axios.delete(`${baseUrl}/user/${userId}/notes/${noteId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+  } catch (error) {
+    console.error
+  }
 }

@@ -9,21 +9,18 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
-import { url } from '@/lib/Consts'
+import { DeleteNote } from '@/lib/api'
 
-async function deleteNote(noteId: string) {
-  await fetch(`${url}/notes/${noteId}`, {
-    method: 'DELETE',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-  })
-}
-
-export default function NoteDeleteDialog({ data, onDeleteComplete }) {
+export default function NoteDeleteDialog({
+  userId,
+  token,
+  data,
+  onDeleteComplete,
+}) {
   const handleSubmit = async () => {
+    const noteId = data.id
     try {
-      await deleteNote(data.id)
+      await DeleteNote(userId, noteId, token)
       onDeleteComplete()
     } catch (error) {
       console.error('Error delete note:', error)

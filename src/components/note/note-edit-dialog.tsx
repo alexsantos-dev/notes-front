@@ -13,19 +13,14 @@ import {
 } from '@/components/ui/dialog'
 import { Label } from '@/components/ui/label'
 import { Textarea } from '../ui/textarea'
-import { url } from '@/lib/Consts'
+import { UpdateNote } from '@/lib/api'
 
-async function editNote(note: string, noteId: string) {
-  await fetch(`${url}/notes/${noteId}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ note }),
-  })
-}
-
-export default function NoteEditDialog({ data, onEditComplete }) {
+export default function NoteEditDialog({
+  userId,
+  token,
+  data,
+  onEditComplete,
+}) {
   const [noteText, setNoteText] = useState(data.note || '')
 
   useEffect(() => {
@@ -34,8 +29,9 @@ export default function NoteEditDialog({ data, onEditComplete }) {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
+    const noteId: string = data.id
     try {
-      await editNote(noteText, data.id)
+      await UpdateNote(userId, noteId, token, { note: noteText })
       onEditComplete()
     } catch (error) {
       console.error('Error editing note:', error)

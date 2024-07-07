@@ -11,26 +11,17 @@ import {
   DialogClose,
 } from '@/components/ui/dialog'
 import { Textarea } from '../ui/textarea'
-import { url } from '@/lib/Consts'
+import { AddNote } from '@/lib/api'
 
-async function addNote(note: string) {
-  await fetch(`${url}/notes`, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify({ note }),
-  })
-}
-
-export default function NoteAddDialog({ onAddComplete }) {
+export default function NoteAddDialog({ userId, token, onAddComplete }) {
   const [noteText, setNoteText] = useState('')
 
   const handleSubmit = async (event) => {
     event.preventDefault()
     try {
-      await addNote(noteText)
+      await AddNote(userId, { note: noteText }, token)
       onAddComplete()
+      setNoteText('')
     } catch (error) {
       console.error('Error adding note:', error)
     }
@@ -55,9 +46,7 @@ export default function NoteAddDialog({ onAddComplete }) {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button type='submit'>
-                Salvar
-              </Button>
+              <Button type='submit'>Salvar</Button>
             </DialogClose>
           </DialogFooter>
         </form>
