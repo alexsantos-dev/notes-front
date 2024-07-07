@@ -9,7 +9,9 @@ import {
   AlertDialogTrigger,
 } from '@/components/ui/alert-dialog'
 import { Button } from '@/components/ui/button'
+import TrashIcon from 'images/trash.png'
 import { DeleteNote } from '@/lib/api'
+import Image from 'next/image'
 
 export default function NoteDeleteDialog({
   userId,
@@ -28,10 +30,10 @@ export default function NoteDeleteDialog({
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild>
-        <Button variant='ghost' className='w-8 h-8'>
-          🗑️
-        </Button>
+      <AlertDialogTrigger asChild className='w-full h-full rounded-sm'>
+        <div className='flex justify-center items-center border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>
+          <Image src={TrashIcon} alt='Trash note icon' width={20} height={20} />
+        </div>
       </AlertDialogTrigger>
       <AlertDialogContent>
         <AlertDialogHeader>

@@ -6,9 +6,7 @@ export default function NoteContainer({
   children: React.ReactNode
 }) {
   return (
-    <div
-      style={{ borderColor: 'var(--primary)' }}
-      className='w-[520px] h-[520px] border-2 rounded-2xl flex justify-center items-center flex-col'>
+    <div className='w-[520px] h-[520px] border rounded-xl shadow-2xl flex justify-center items-center flex-col bg-white'>
       {children}
     </div>
   )

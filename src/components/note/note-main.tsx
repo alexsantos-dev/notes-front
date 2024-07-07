@@ -28,9 +28,7 @@ export default function NoteMain({ userId, token }) {
 
   return (
     <NoteContainer>
-      <section
-        style={{ borderColor: 'var(--primary)' }}
-        className='w-full h-5/6 border-2 rounded-tl-xl rounded-tr-xl p-1'>
+      <section className='w-full h-5/6 p-1'>
         <ScrollArea className='h-full w-full p-3'>
           <NoteBlock
             userId={userId}
@@ -41,9 +39,7 @@ export default function NoteMain({ userId, token }) {
           />
         </ScrollArea>
       </section>
-      <section
-        style={{ borderColor: 'var(--primary)' }}
-        className='w-full h-1/6 border-2 rounded-bl-xl rounded-br-xl flex items-center justify-center'>
+      <section className='w-full h-1/6 flex items-center justify-center'>
         <NoteAddDialog
           userId={userId}
           token={token}

@@ -4,7 +4,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { useRouter } from 'next/navigation'
 import { z } from 'zod'
-import { login } from '@/lib/api'
+import { createUser, login } from '@/lib/api'
 import { setToken, setUserId } from '@/lib/auth'
 
 import { Button } from '@/components/ui/button'
@@ -17,23 +17,33 @@ import {
   FormMessage,
 } from '@/components/ui/form'
 import { Input } from '@/components/ui/input'
-import Link from 'next/link'
 
 const FormSchema = z.object({
+  name: z.string().regex(/^[a-zA-ZÀ-ÖØ-öø-ÿ'\- ]{4,200}$/, {
+    message: 'Insira um nome válido',
+  }),
   email: z.string().email({
     message: 'Insira um email válido',
   }),
-  password: z.string(),
+  password: z
+    .string()
+    .regex(
+      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&-])[A-Za-z\d@$!%*?&-]{8,}$/,
+      {
+        message: 'Insira uma senha forte',
+      }
+    ),
   apiError: z.string().optional(),
 })
 
 type FormSchemaType = z.infer<typeof FormSchema>
 
-export default function LoginForm({ userId, token }) {
+export default function RegistForm({ userId, token }) {
   const router = useRouter()
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
+      name: '',
       email: '',
       password: '',
     },
@@ -42,6 +52,7 @@ export default function LoginForm({ userId, token }) {
 
   async function onSubmit(data: FormSchemaType) {
     try {
+      await createUser(data.name, data.email, data.password)
       const { userId, token } = await login(data.email, data.password)
       setUserId(userId)
       setToken(token)
@@ -59,6 +70,19 @@ export default function LoginForm({ userId, token }) {
             onSubmit as SubmitHandler<FormSchemaType>
           )}
           className='bg-white border rounded-lg shadow-lg w-1/4 space-y-6 p-6'>
+          <FormField
+            control={form.control}
+            name='name'
+            render={({ field }) => (
+              <FormItem>
+                <FormLabel>Nome</FormLabel>
+                <FormControl>
+                  <Input placeholder='Jhon Doe' {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
           <FormField
             control={form.control}
             name='email'
@@ -81,27 +105,13 @@ export default function LoginForm({ userId, token }) {
                 <FormControl>
                   <Input placeholder='HXVhkÇ-a872' type='password' {...field} />
                 </FormControl>
+                <FormMessage />
               </FormItem>
             )}
           />
-          <div className='flex flex-col justify-center items-center'>
-            <FormItem className='w-full'>
-              <Button type='submit' className='w-full'>
-                Enviar
-              </Button>
-            </FormItem>
-            <FormItem className='w-full mt-3 flex justify-center'>
-              <FormLabel>
-                Ainda não tem conta? clique
-                <Link href={`/register`}>
-                  <span className='text-blue-600 visited:text-purple-600'>
-                    {' '}
-                    aqui
-                  </span>
-                </Link>
-              </FormLabel>
-            </FormItem>
-          </div>
+          <Button type='submit' className='w-full'>
+            Enviar
+          </Button>
           {form.formState.errors.apiError && (
             <FormItem className='w-full mt-3 flex justify-center'>
               <FormMessage>

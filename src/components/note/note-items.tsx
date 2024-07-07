@@ -13,7 +13,7 @@ export default function NoteItems({
       <div className='w-5/6 h-full flex justify-between items-center p-2'>
         <p>{data.note}</p>
       </div>
-      <div className='w-1/6 h-full flex justify-center items-center gap-2'>
+      <div className='w-1/5 h-full flex justify-center items-center gap-3'>
         <NoteEditDialog
           userId={userId}
           token={token}

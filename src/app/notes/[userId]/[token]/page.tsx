@@ -17,7 +17,7 @@ const Home = () => {
   }, [])
 
   return (
-    <main className='bg-white w-full h-screen flex justify-center items-center'>
+    <main className='bg-slate-100 w-full h-screen flex justify-center items-center'>
       {userId && <NoteMain token={token} userId={userId} />}
     </main>
   )
