@@ -30,7 +30,7 @@ export default function NoteMain({ userId, token }: UserInterface) {
   return (
     <NoteContainer>
       <section className='w-full h-[520px] flex justify-center items-center'>
-        <ScrollArea className='mt-4 h-full lg:w-[512px] p-3'>
+        <ScrollArea className='mt-4 w-full h-full lg:w-[512px] p-3'>
           <NoteBlock
             userId={userId}
             token={token}
