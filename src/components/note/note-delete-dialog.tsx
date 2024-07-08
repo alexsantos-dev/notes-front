@@ -46,7 +46,7 @@ export default function NoteDeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Deseja apagar esta nota?</AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogFooter className='gap-2'>
+        <AlertDialogFooter className='flex flex-row gap-2'>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button
