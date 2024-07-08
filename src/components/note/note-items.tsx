@@ -1,5 +1,13 @@
+import { UserInterface } from '@/app/userInterface'
 import NoteDeleteDialog from './note-delete-dialog'
 import NoteEditDialog from './note-edit-dialog'
+import { NoteInterface } from './noteInterface'
+
+interface NoteItemsProps extends UserInterface {
+  data: NoteInterface
+  onEditComplete: () => Promise<void>
+  onDeleteComplete: () => Promise<void>
+}
 
 export default function NoteItems({
   userId,
@@ -7,7 +15,7 @@ export default function NoteItems({
   data,
   onEditComplete,
   onDeleteComplete,
-}) {
+}: NoteItemsProps) {
   return (
     <div className='w-full h-[56px] flex justify-between items-center p-2'>
       <div className='p-2 w-[230px]'>

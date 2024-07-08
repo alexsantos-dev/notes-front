@@ -29,7 +29,7 @@ const FormSchema = z.object({
 
 type FormSchemaType = z.infer<typeof FormSchema>
 
-export default function LoginForm({ userId, token }) {
+export default function LoginForm() {
   const router = useRouter()
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),

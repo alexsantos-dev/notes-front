@@ -1,17 +1,18 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import NoteContainer from './note-container'
 import { ScrollArea } from '../ui/scroll-area'
 import NoteBlock from './note-block'
 import NoteAddDialog from './note-add-dialog'
 import { GetAllNotes } from '@/lib/api'
+import { UserInterface } from '@/app/userInterface'
 
-export default function NoteMain({ userId, token }) {
+export default function NoteMain({ userId, token }: UserInterface) {
   const [notes, setNotes] = useState([])
   const [loading, setLoading] = useState(true)
 
-  const fetchNotes = async () => {
+  const fetchNotes = useCallback(async () => {
     try {
       const notesData = await GetAllNotes(userId, token)
       setNotes(notesData)
@@ -20,11 +21,11 @@ export default function NoteMain({ userId, token }) {
     } finally {
       setLoading(false)
     }
-  }
+  }, [userId, token])
 
   useEffect(() => {
     fetchNotes()
-  }, [])
+  }, [fetchNotes])
 
   return (
     <NoteContainer>

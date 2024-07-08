@@ -15,20 +15,24 @@ import { Textarea } from '../ui/textarea'
 import { UpdateNote } from '@/lib/api'
 import Image from 'next/image'
 import ExpandIcon from 'images/expand.png'
+import { UserInterface } from '@/app/userInterface'
+import { NoteInterface } from './noteInterface'
 
-export default function NoteEditDialog({
-  userId,
-  token,
-  data,
-  onEditComplete,
-}) {
+interface NoteEditDialogProps extends UserInterface {
+  data: NoteInterface
+  onEditComplete: () => Promise<void>
+}
+
+export default function NoteEditDialog(
+  { userId, token, data, onEditComplete }: NoteEditDialogProps
+) {
   const [noteText, setNoteText] = useState(data.note || '')
 
   useEffect(() => {
     setNoteText(data.note || '')
   }, [data])
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     const noteId: string = data.id
     try {

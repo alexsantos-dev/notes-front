@@ -38,7 +38,7 @@ const FormSchema = z.object({
 
 type FormSchemaType = z.infer<typeof FormSchema>
 
-export default function RegistForm({ userId, token }) {
+export default function RegistForm() {
   const router = useRouter()
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
@@ -54,8 +54,10 @@ export default function RegistForm({ userId, token }) {
     try {
       await createUser(data.name, data.email, data.password)
       const { userId, token } = await login(data.email, data.password)
-      setUserId(userId)
-      setToken(token)
+      if (userId && token) {
+        setUserId(userId)
+        setToken(token)
+      }
       router.push(`/notes/${userId}/${token}`)
     } catch (error: any) {
       setError('apiError', { message: error.message })

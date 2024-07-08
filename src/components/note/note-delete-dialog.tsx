@@ -12,13 +12,20 @@ import { Button } from '@/components/ui/button'
 import TrashIcon from 'images/trash.png'
 import { DeleteNote } from '@/lib/api'
 import Image from 'next/image'
+import { UserInterface } from '@/app/userInterface'
+import { NoteInterface } from './noteInterface'
+
+interface NoteDeleteDialogProps extends UserInterface {
+  data: NoteInterface
+  onDeleteComplete: () => Promise<void>
+}
 
 export default function NoteDeleteDialog({
   userId,
   token,
   data,
   onDeleteComplete,
-}) {
+}: NoteDeleteDialogProps) {
   const handleSubmit = async () => {
     const noteId = data.id
     try {

@@ -12,11 +12,20 @@ import {
 } from '@/components/ui/dialog'
 import { Textarea } from '../ui/textarea'
 import { AddNote } from '@/lib/api'
+import { UserInterface } from '@/app/userInterface'
 
-export default function NoteAddDialog({ userId, token, onAddComplete }) {
+interface NoteAddDialogProps extends UserInterface {
+  onAddComplete: () => Promise<void>
+}
+
+export default function NoteAddDialog({
+  userId,
+  token,
+  onAddComplete,
+}: NoteAddDialogProps) {
   const [noteText, setNoteText] = useState('')
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: any) => {
     event.preventDefault()
     try {
       await AddNote(userId, { note: noteText }, token)

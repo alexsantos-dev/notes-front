@@ -2,14 +2,22 @@
 import NoteItems from './note-items'
 import NoteBlockLoading from './note-block-loading'
 import { Separator } from '../ui/separator'
+import { UserInterface } from '@/app/userInterface'
+import { NoteInterface } from './noteInterface'
+
+interface NoteBlockProps extends UserInterface {
+  notes: NoteInterface[]
+  loading: boolean
+  fetchNotes: () => Promise<void>
+}
 
 export default function NoteBlock({
   userId,
   token,
-  notes = [],
+  notes,
   loading,
   fetchNotes,
-}) {
+}: NoteBlockProps) {
   return (
     <>
       {loading ? (

@@ -2,23 +2,26 @@
 import React, { useEffect, useState } from 'react'
 import NoteMain from '@/components/note/note-main'
 import { getUserId, getToken } from '@/lib/auth'
+import { UserInterface } from '@/app/userInterface'
 
 const Home = () => {
-  const [userId, setUserId] = useState<string | null>(null)
-  const [token, setToken] = useState<string | null>(null)
+  const [user, setUser] = useState<UserInterface | null>(null)
 
   useEffect(() => {
-    const storedUserId = getUserId()
-    const storedToken = getToken()
-    if (storedUserId && storedToken) {
-      setUserId(storedUserId)
-      setToken(storedToken)
+    const userId = getUserId()
+    const token = getToken()
+    if (userId && token) {
+      setUser({ userId, token })
     }
   }, [])
 
+  if (!user) {
+    return <div>Loading...</div>
+  }
+
   return (
     <main className='bg-slate-100 w-screen h-screen flex justify-center items-center'>
-      {userId && <NoteMain token={token} userId={userId} />}
+      <NoteMain token={user.token} userId={user.userId} />
     </main>
   )
 }
