@@ -1,19 +1,3 @@
 {
-  "version": 2,
-  "functions": {
-    "api": {
-      "runtime": "next14.x",
-      "memory": 512
-    }
-  },
-  "routes": [
-    {
-      "src": "/api/(.*)",
-      "dest": "/src/lib/api.$1"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/$1"
-    }
-  ]
+  "rewrites": [{ "source": "/(.*)", "destination": "/" }]
 }

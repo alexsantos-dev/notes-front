@@ -23,8 +23,6 @@ export async function createUser(name: string, email: string, password: string) 
 }
 
 export async function login(email: string, password: string) {
-  console.log(API_URL)
-  console.log(process.env.NEXT_PUBLIC_TESTE_KEY)
   try {
     const response = await axios.post<LoginResponse>(`${API_URL}/auth/login`, { email, password })
     const { token } = response.data
