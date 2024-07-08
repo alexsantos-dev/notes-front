@@ -48,7 +48,9 @@ export default function NoteDeleteDialog({
         </AlertDialogHeader>
         <AlertDialogFooter className='flex-row justify-center items-center gap-4'>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction>Confirmar</AlertDialogAction>
+          <AlertDialogAction onSubmit={handleSubmit}>
+            Confirmar
+          </AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
