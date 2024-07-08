@@ -46,15 +46,9 @@ export default function NoteDeleteDialog({
         <AlertDialogHeader>
           <AlertDialogTitle>Deseja apagar esta nota?</AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogFooter className='flex flex-row gap-2'>
+        <AlertDialogFooter className='flex-row justify-center items-center gap-4'>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
-          <AlertDialogAction asChild>
-            <Button
-              onClick={handleSubmit}
-              className='bg-destructive text-destructive-foreground shadow-sm hover:bg-destructive/90'>
-              Confirmar
-            </Button>
-          </AlertDialogAction>
+          <AlertDialogAction>Confirmar</AlertDialogAction>
         </AlertDialogFooter>
       </AlertDialogContent>
     </AlertDialog>
