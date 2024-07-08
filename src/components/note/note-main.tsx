@@ -28,8 +28,8 @@ export default function NoteMain({ userId, token }) {
 
   return (
     <NoteContainer>
-      <section className='w-full h-5/6 p-1'>
-        <ScrollArea className='h-full w-full p-3'>
+      <section className='w-full h-[520px] flex justify-center items-center'>
+        <ScrollArea className='mt-4 h-full lg:w-[512px] p-3'>
           <NoteBlock
             userId={userId}
             token={token}
@@ -39,7 +39,7 @@ export default function NoteMain({ userId, token }) {
           />
         </ScrollArea>
       </section>
-      <section className='w-full h-1/6 flex items-center justify-center'>
+      <section className='w-full h-[80px] flex items-center justify-center shadow-inner'>
         <NoteAddDialog
           userId={userId}
           token={token}

@@ -30,16 +30,16 @@ export default function NoteDeleteDialog({
   }
   return (
     <AlertDialog>
-      <AlertDialogTrigger asChild className='w-full h-full rounded-sm'>
+      <AlertDialogTrigger asChild className='w-[38px] h-full rounded-sm'>
         <div className='flex justify-center items-center border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>
           <Image src={TrashIcon} alt='Trash note icon' width={20} height={20} />
         </div>
       </AlertDialogTrigger>
-      <AlertDialogContent>
+      <AlertDialogContent className='w-[356px] flex flex-col justify-center items-center '>
         <AlertDialogHeader>
           <AlertDialogTitle>Deseja apagar esta nota?</AlertDialogTitle>
         </AlertDialogHeader>
-        <AlertDialogFooter>
+        <AlertDialogFooter className='gap-2'>
           <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <AlertDialogAction asChild>
             <Button

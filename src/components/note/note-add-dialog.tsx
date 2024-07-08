@@ -32,7 +32,7 @@ export default function NoteAddDialog({ userId, token, onAddComplete }) {
       <DialogTrigger asChild>
         <Button className='w-2/3 h-3/5'>Adicionar nota</Button>
       </DialogTrigger>
-      <DialogContent className='sm:max-w-[425px]'>
+      <DialogContent className='w-[356px]'>
         <form onSubmit={handleSubmit}>
           <DialogHeader className='mb-6'>
             <DialogTitle className='text-center'>Adicionar nota</DialogTitle>

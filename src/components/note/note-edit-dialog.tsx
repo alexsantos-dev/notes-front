@@ -42,18 +42,17 @@ export default function NoteEditDialog({
   return (
     <>
       <Dialog>
-        <DialogTrigger asChild className='w-full h-full rounded-sm'>
+        <DialogTrigger asChild className='w-[38px] h-full rounded-sm'>
           <div className='flex justify-center items-center border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>
             <Image
               src={ExpandIcon}
-              className='absolute'
               alt='Expand note icon'
               width={17}
               height={17}
             />
           </div>
         </DialogTrigger>
-        <DialogContent className='sm:max-w-[425px]'>
+        <DialogContent className='w-[356px]'>
           <form onSubmit={handleSubmit}>
             <DialogHeader className='mb-6'>
               <DialogTitle>Editar nota</DialogTitle>

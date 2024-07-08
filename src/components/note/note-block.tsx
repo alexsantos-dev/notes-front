@@ -20,7 +20,7 @@ export default function NoteBlock({
             notes.map((data) => (
               <div
                 key={data.id}
-                className='flex flex-col justify-center items-start'>
+                className='w-full h-full flex flex-col justify-center items-start'>
                 <NoteItems
                   userId={userId}
                   token={token}

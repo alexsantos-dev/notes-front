@@ -52,13 +52,13 @@ export default function LoginForm({ userId, token }) {
   }
 
   return (
-    <div className='w-screen h-screen bg-slate-100 flex justify-center items-center'>
+    <main className='w-screen h-screen bg-slate-100 flex justify-center items-center'>
       <Form {...form}>
         <form
           onSubmit={form.handleSubmit(
             onSubmit as SubmitHandler<FormSchemaType>
           )}
-          className='bg-white border rounded-lg shadow-lg w-1/4 space-y-6 p-6'>
+          className='bg-white border rounded-lg shadow-lg min-w-[320px] min-h-[260px] space-y-6 p-6'>
           <FormField
             control={form.control}
             name='email'
@@ -111,6 +111,6 @@ export default function LoginForm({ userId, token }) {
           )}
         </form>
       </Form>
-    </div>
+    </main>
   )
 }

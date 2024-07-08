@@ -69,7 +69,7 @@ export default function RegistForm({ userId, token }) {
           onSubmit={form.handleSubmit(
             onSubmit as SubmitHandler<FormSchemaType>
           )}
-          className='bg-white border rounded-lg shadow-lg w-1/4 space-y-6 p-6'>
+          className='bg-white border rounded-lg shadow-lg min-w-[320px] min-h-[260px] space-y-6 p-6'>
           <FormField
             control={form.control}
             name='name'

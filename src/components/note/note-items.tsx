@@ -10,10 +10,10 @@ export default function NoteItems({
 }) {
   return (
     <div className='w-full h-[56px] flex justify-between items-center p-2'>
-      <div className='w-5/6 h-full flex justify-between items-center p-2'>
-        <p>{data.note}</p>
+      <div className='p-2 w-[230px]'>
+        <p className='overflow-hidden text-ellipsis text-nowrap'>{data.note}</p>
       </div>
-      <div className='w-1/5 h-full flex justify-center items-center gap-3'>
+      <div className='w-[86px] h-full flex justify-between items-center'>
         <NoteEditDialog
           userId={userId}
           token={token}
