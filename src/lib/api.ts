@@ -1,7 +1,6 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
-import { baseUrl } from './consts'
-
+import * as dotenv from 'dotenv'
 interface LoginResponse {
   token: string
 }
@@ -10,9 +9,11 @@ interface Data {
   note: string
 }
 
+dotenv.config()
+
 export async function createUser(name: string, email: string, password: string) {
   try {
-    const response = await axios.post(`${baseUrl}/user`, { name, email, password })
+    const response = await axios.post(`${process.env.API}/user`, { name, email, password })
     return response.data
   }
   catch (error: any) {
@@ -24,7 +25,7 @@ export async function createUser(name: string, email: string, password: string) 
 
 export async function login(email: string, password: string) {
   try {
-    const response = await axios.post<LoginResponse>(`${baseUrl}/auth/login`, { email, password })
+    const response = await axios.post<LoginResponse>(`${process.env.API}/auth/login`, { email, password })
     const { token } = response.data
     const decodedToken = jwtDecode<{ sub: string }>(token)
     const userId = decodedToken.sub
@@ -36,7 +37,7 @@ export async function login(email: string, password: string) {
 
 export async function GetAllNotes(userId: string, token: string) {
   try {
-    const response = await axios.get(`${baseUrl}/user/${userId}/notes`, {
+    const response = await axios.get(`${process.env.API}/user/${userId}/notes`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -49,7 +50,7 @@ export async function GetAllNotes(userId: string, token: string) {
 
 export async function AddNote(userId: string, data: Data, token: string) {
   try {
-    const response = await axios.post(`${baseUrl}/user/${userId}/notes`, data, {
+    const response = await axios.post(`${process.env.API}/user/${userId}/notes`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -62,7 +63,7 @@ export async function AddNote(userId: string, data: Data, token: string) {
 
 export async function UpdateNote(userId: string, noteId: string, token: string, data: Data) {
   try {
-    const response = await axios.patch(`${baseUrl}/user/${userId}/notes/${noteId}`, data, {
+    const response = await axios.patch(`${process.env.API}/user/${userId}/notes/${noteId}`, data, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -75,7 +76,7 @@ export async function UpdateNote(userId: string, noteId: string, token: string, 
 
 export async function DeleteNote(userId: string, noteId: string, token: string) {
   try {
-    await axios.delete(`${baseUrl}/user/${userId}/notes/${noteId}`, {
+    await axios.delete(`${process.env.API}/user/${userId}/notes/${noteId}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

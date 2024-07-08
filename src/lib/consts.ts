@@ -1,1 +1,0 @@
-export const baseUrl: string = 'https://notes-back-h7u5.onrender.com'
