@@ -23,9 +23,12 @@ interface NoteEditDialogProps extends UserInterface {
   onEditComplete: () => Promise<void>
 }
 
-export default function NoteEditDialog(
-  { userId, token, data, onEditComplete }: NoteEditDialogProps
-) {
+export default function NoteEditDialog({
+  userId,
+  token,
+  data,
+  onEditComplete,
+}: NoteEditDialogProps) {
   const [noteText, setNoteText] = useState(data.note || '')
 
   useEffect(() => {
@@ -46,7 +49,7 @@ export default function NoteEditDialog(
   return (
     <>
       <Dialog>
-        <DialogTrigger asChild className='w-[38px] h-full rounded-sm'>
+        <DialogTrigger asChild className='w-[38px] h-full rounded-lg'>
           <div className='flex justify-center items-center border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>
             <Image
               src={ExpandIcon}
