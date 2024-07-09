@@ -50,7 +50,7 @@ export default function NoteEditDialog({
     <>
       <Dialog>
         <DialogTrigger asChild className='w-[38px] h-full rounded-lg'>
-          <div className='flex justify-center items-center border border-input bg-background shadow-sm hover:bg-accent hover:text-accent-foreground'>
+          <div className='flex justify-center items-center bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80'>
             <Image
               src={ExpandIcon}
               alt='Expand note icon'
