@@ -1,5 +1,7 @@
 import axios from 'axios'
 import { jwtDecode } from 'jwt-decode'
+import { signIn } from 'next-auth/react'
+import { redirect } from 'next/navigation'
 interface LoginResponse {
   token: string
 }
@@ -31,6 +33,19 @@ export async function login(email: string, password: string) {
     return { response, token, userId }
   } catch (error: any) {
     throw new Error('Email ou senha inválida')
+  }
+}
+
+export async function googleLogin(name: string, email: string, password: string) {
+
+  try {
+    const response = await axios.post<LoginResponse>(`${API_URL}/auth/google`, { name, email, password })
+    const { token } = response.data
+    const decodedToken = jwtDecode<{ sub: string }>(token)
+    const userId = decodedToken.sub
+    return { token, userId }
+  } catch (error: any) {
+    throw new Error('Erro ao fazer login com Google')
   }
 }
 
