@@ -21,7 +21,7 @@ export const getUserId = (): string | null => {
 }
 
 
-export const removeToken = (): void => {
+export const removeCredentials = (): void => {
   localStorage.removeItem('token')
   localStorage.removeItem('userId')
 }
