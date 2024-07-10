@@ -2,11 +2,9 @@
 
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm, SubmitHandler } from 'react-hook-form'
-import { redirect } from 'next/navigation'
 import { z } from 'zod'
 import { login } from '@/lib/api'
 import { setToken, setUserId } from '@/lib/auth'
-import NoteMainLoading from '@/components/note/note-main-loading'
 
 import { Button } from '@/components/ui/button'
 import {
@@ -22,6 +20,7 @@ import Link from 'next/link'
 import GoogleLoginButton from '@/components/google/google-button'
 
 import { SessionProvider, useSession } from 'next-auth/react'
+import { useRouter } from 'next/navigation'
 
 const FormSchema = z.object({
   email: z.string().email({
@@ -34,6 +33,7 @@ const FormSchema = z.object({
 type FormSchemaType = z.infer<typeof FormSchema>
 
 export default function LoginForm() {
+  const router = useRouter()
   const form = useForm<FormSchemaType>({
     resolver: zodResolver(FormSchema),
     defaultValues: {
@@ -48,7 +48,7 @@ export default function LoginForm() {
       const { userId, token } = await login(data.email, data.password)
       setUserId(userId)
       setToken(token)
-      redirect(`/notes/${userId}/${token}`)
+      router.push(`/notes/${userId}/${token}`)
     } catch (error: any) {
       setError('apiError', { message: error.message })
     }
